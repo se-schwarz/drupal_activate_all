@@ -1,0 +1,22 @@
+<?php
+
+function activate_all_field_widget_form_alter(&$element, &$form_state, $context) {
+  if (isset($element['#type']) && $element['#type'] == 'select' && $element['#multiple'] == true) {
+    _activate_all_prepare_attached($element);
+    _activate_all_prepare_attributes($element);
+    $element['#attributes']['class'][] = 'activate-all-field';
+    $element['#attached']['js'][] = drupal_get_path('module', 'activate_all') . '/js/activateAll.js';
+    $element['#attached']['css'][] = drupal_get_path('module', 'activate_all') . '/css/activateAll.css';
+  }
+}
+
+function _activate_all_prepare_attached(&$element) {
+  if (!isset($element['#attached'])) $element['#attached'] = array();
+  if (!isset($element['#attached']['js'])) $element['#attached']['js'] = array();
+  if (!isset($element['#attached']['css'])) $element['#attached']['js'] = array();
+}
+
+function _activate_all_prepare_attributes(&$element) {
+  if (!isset($element['#attributes'])) $element['#attributes'] = array();
+  if (!isset($element['#attributes']['class'])) $element['#attributes']['class'] = array();
+}
